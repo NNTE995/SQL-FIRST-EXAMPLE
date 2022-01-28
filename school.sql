@@ -53,5 +53,6 @@ UPDATE enrollment SET courseName = null, courseId = null WHERE (courseName = 'Co
 -- ----------------------------------------
 SELECT * FROM enrollment;
 SELECT * FROM enrollment WHERE courseName IS NOT NULL; -- Fetch null values
-SELECT studentId, studentName FROM enrollment WHERE courseName IS NULL; -- students not rolled in all courses
-SELECT courseName,count(courseName) AS NumberOfRowsPerCourseName FROM enrollment GROUP BY courseName ORDER BY NumberOfRowsPerCourseName DESC; -- Order By maximum to minimun
+SELECT student.studentId, student.studentName FROM student INNER JOIN enrollment ON student.studentId = (enrollment.courseName IS NOT NULL); -- students rolled in all courses
+SELECT studentId, studentName FROM enrollment WHERE courseName IS NULL;-- students not rolled in all courses
+SELECT courseName,count(courseName) AS NumberOfRowsPerCourseName FROM enrollment GROUP BY courseName ORDER BY NumberOfRowsPerCourseName DESC LIMIT 1; -- Order By maximum to minimun
